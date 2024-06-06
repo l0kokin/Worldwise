@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 
-const BASE_URL = "http://localhost:9000";
+const BASE_URL = "https://worldwise-beige.vercel.app";
 
 const CitiesContext = createContext();
 
