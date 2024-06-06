@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 
-const BASE_URL = "https://worldwise-beige.vercel.app";
+const BASE_URL = "https://sali-cities-api-37e9d9513d59.herokuapp.com";
 
 const CitiesContext = createContext();
 
@@ -17,6 +17,7 @@ function reducer(state, action) {
       return { ...state, isLoading: true };
 
     case "cities/loaded":
+      console.log(action);
       return { ...state, isLoading: false, cities: action.payload };
 
     case "city/loaded":
@@ -26,7 +27,7 @@ function reducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        cities: [...state.cities, action.payload],
+        cities: action.payload,
         currentCity: action.payload,
       };
 
@@ -58,7 +59,7 @@ function CitiesProvider({ children }) {
       try {
         const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
-        dispatch({ type: "cities/loaded", payload: data });
+        dispatch({ type: "cities/loaded", payload: data.cities });
       } catch {
         dispatch({
           type: "rejected",
@@ -74,7 +75,7 @@ function CitiesProvider({ children }) {
     try {
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
-      dispatch({ type: "city/loaded", payload: data });
+      dispatch({ type: "city/loaded", payload: data.city });
     } catch {
       dispatch({
         type: "rejected",
@@ -93,7 +94,7 @@ function CitiesProvider({ children }) {
       });
       const data = await res.json();
 
-      dispatch({ type: "city/created", payload: data });
+      dispatch({ type: "city/created", payload: data.cities });
     } catch {
       dispatch({
         type: "rejected",

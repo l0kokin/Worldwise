@@ -45,7 +45,6 @@ function Form() {
             `${BASE_URL}?latitude=${lat}&longitude=${lng}`
           );
           const data = await res.json();
-          console.log(data);
           if (!data.countryCode)
             throw new Error(
               "That doesn't seem to be a city. Click somewhere else"
@@ -76,7 +75,8 @@ function Form() {
       emoji,
       date,
       notes,
-      position: { lat, lng },
+      lat,
+      lng,
     };
 
     await createCity(newCity);
